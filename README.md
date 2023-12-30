@@ -81,14 +81,14 @@ A camada tem camadas. Pensa em uma cebola. Agora imagina que colocaram uma senha
 Com essa analogia horrível, os principais modelos de camadas analíticas são:
 * **Data Warehouse:** Aqui é a cebola com senha (Parei com as analogias). É o primeiro desenho de camada analítica, com a estruturação dos dados em tabelas dimensionais e fatos, tendo como fonte de extração os bancos transacionais, buscando facilitar a consulta dos dados mas mantendo diretriizes de qualidade e consistência dos dados como dos dbs transacionais.
 * **Data Lake:** É o filho millenial do Warehouse, plugado na internet e que descobriu o json e o csv. Passa a olhar para os dados além do transacional, sem se preocupar com a estrutura das informações que mantém. Foi o primeiro passo para o Big Data.
-* **Data Lakehouse:** É o filho do lake, que voltou a morar com os avós (não consegui fugir dessa). É a junção do Data Lake com o Data Warehouse, com a estruturação dos dados em tabelas dimensionais e fatos, mas com a capacidade de armazenamento massivo do Data Lake.
+* **Data Lakehouse:** É o filho do lake, que voltou a morar com os avós (não consegui fugir dessa). É a junção do Data Lake com o Data Warehouse, trazendo a capacidade de armazenamento massivo do Data Lake ms olhando para qualidade e consistência dos dados como um Warehouse.
 
   Duas palavras chave do Lakehouse: Metadados e Governança. Voltamos a elas em breve.
 * **Data Mesh:** Não é bem uma camada, sonha em ser uma estratégia empresarial, mas funciona com uma arquitetura de tecnologia no mundo do lakehouse. É a descentralização da camada analítica, trazendo ela para as frentes do negócio, para engenharia de software e onde mais puder chegar. A idéia é que se você cria seus dados, você cuida deles.
-* **Data Swamp:** Ninguém quer assumir o pântano que virou se lake mas acontece. É o Data Lake sem governança, sem qualidade, sem estrutura. Geralmente grande demais para resetar e necessário para ser abandonado. Ningúem fala dos fracassos, mas eles existem.
+* **Data Swamp:** Ninguém quer assumir o pântano que virou seu lake, mas acontece. É o Data Lake sem governança, sem qualidade, sem estrutura. Geralmente grande demais e necessário para ser abandonado ou resetado. Ningúem fala dos fracassos, mas eles existem.
 
 ### **3.3. Arquitetura das camadas analíticas:**
-Lembra do T do Processamento? É aqui que se vê o trabalho dele. A arquitetura das camadas analíticas é o que vai definir o processamento dos dados, a estruturação dos dados e a consulta dos dados.
+Lembra do T do Processamento? É aqui que se vê o trabalho dele. A arquitetura das camadas analíticas é o que vai definir o processamento estruturação e a consulta dos dados.
 - **Bronze**: É a camada de dados brutos, sem tratamento, sem transformação, sem nada. É a camada de dados transacionais, mas também pode ser a camada de dados de origem de um data lake.
 - **Prata**: É a camada de dados tratados, mas sem estruturação. É a camada de dados de um data lake, mas também pode ser a camada de dados de origem de um data warehouse.
 - **Ouro**: É a camada de dados tratados e estruturados. É a camada de dados de um data warehouse, mas também pode ser a camada de dados de origem de um data lakehouse.
