@@ -81,7 +81,7 @@ A camada tem camadas. Pensa em uma cebola. Agora imagina que colocaram uma senha
 Com essa analogia horrível, os principais modelos de camadas analíticas são:
 * **Data Warehouse:** Aqui é a cebola com senha (Parei com as analogias). É o primeiro desenho de camada analítica, com a estruturação dos dados em tabelas dimensionais e fatos, tendo como fonte de extração os bancos transacionais, buscando facilitar a consulta dos dados mas mantendo diretriizes de qualidade e consistência dos dados como dos dbs transacionais.
 * **Data Lake:** É o filho millenial do Warehouse, plugado na internet e que descobriu o json e o csv. Passa a olhar para os dados além do transacional, sem se preocupar com a estrutura das informações que mantém. Foi o primeiro passo para o Big Data.
-* **Data Lakehouse:** É o filho do lake, que voltou a morar com os avós (não consegui fugir dessa). É a junção do Data Lake com o Data Warehouse, trazendo a capacidade de armazenamento massivo do Data Lake ms olhando para qualidade e consistência dos dados como um Warehouse.
+* **Data Lakehouse:** É o filho do lake, que voltou a morar com os avós (não consegui fugir dessa). É a junção do Data Lake com o Data Warehouse, trazendo a capacidade de armazenamento massivo do Data Lake mas olhando para qualidade e consistência dos dados como um Warehouse.
 
   Duas palavras chave do Lakehouse: Metadados e Governança. Voltamos a elas em breve.
 * **Data Mesh:** Não é bem uma camada, sonha em ser uma estratégia empresarial, mas funciona com uma arquitetura de tecnologia no mundo do lakehouse. É a descentralização da camada analítica, trazendo ela para as frentes do negócio, para engenharia de software e onde mais puder chegar. A idéia é que se você cria seus dados, você cuida deles.
