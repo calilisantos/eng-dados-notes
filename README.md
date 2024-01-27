@@ -99,7 +99,7 @@ Seja criando ou fazendo o meio de campo com produtos de mercado, atuando em plat
   Um subproduto do catálogo é a linhagem de dados. É a árvore genealógica do artefato. Tabelas, arquivos e o que mais originou o artefato, e o que o artefato originou.
   - Ps: **Afinal o que são metadados?** São os dados dos dados. É a informação sobre a informação. É o nome da tabela, o nome da coluna, o tipo de dado, o tamanho do dado, etc.
 
-    Em arquivos parquet e delta, citados antes, a criação, atualização e armaenamento dos metadados é automática por exemplo.
+    Em arquivos parquet e delta, citados antes, a criação, atualização e armazenamento dos metadados é automática por exemplo.
 
     Metadados está para a engenharia de dados assim como os dados também estão (Não sei se fez sentido mas é pra reforçar a importância deles).
 - **Camada semântica**: De novo do lakehouse. É uma camada preocupada em dar sentido, padronização e aplicar regras de negócio aos dados. É a camada de dados tratados e estruturados, mas com a visão do negócio.
