@@ -8,6 +8,14 @@
             * **View**
             * **Function**
 
+A arquitetura de Lakehouse do Databricks combina o protocolo delta lake em objetos de storage cloud.
+1. **Metastore**: objeto de registro dos objetos, com 5 tipos de objetos primários:
+2. **Catalog**: Do Databricks Lakehouse, que agrupa bancos de dados;
+3. **Schema**: Ou database. É um grupo de objetos no catálogo;
+3.1. **Table**: Objetos que podem ser managed (cujos arquivos são gerenciados pelo metastore) ou external (cujos arquivos são armazenados no storage da cloud, fora do espaço gerenciado, `dbfs`);
+3.2. **View**: é uma consulta (query) salva, tipicamente em uma ou mais tabelas ou fonte de dados, podendo ser temporárias, ou globalmente temporárias;
+3.3. **Function**: É uma lógica armazenada, que retorna um valor ou algumas linhas.
+
 ### 1.2. **External Storage**
 Composta de Storage credentials e external locations, são elementos da cloud que podem ser usados pelo Databricks
 
