@@ -19,11 +19,11 @@ Data lakes são soluções robustas para armazenamento massivo de vários format
     Cada transação confirmada é gravado no log:
     * Tipo da operação (`INSERT`, `UPDATE`, ...);
     * Seus predicados (condições, filtros, ...);
-    * Nome dos parquet afetados pela operação.
-    Com os delta logs é garantido:
-    * **Transações ACID:** O log só é gerado com a transação bem sucedida, igualmente o dado será consumido considerando a última transação<br/>
-      Arquivos mal formados ou sem registro, não são considerados;
-    * **Auditoria completa:** Ao registrar a operação, momento e usuário envolvido, é permitido traçar a evolução do dado e garantir sua governança e resolução de problemas.
+    * Nome dos parquet afetados pela operação.<br/>
+    **Com os delta logs é garantido:**
+      * **Transações ACID:** O log só é gerado com a transação bem sucedida, igualmente o dado será consumido considerando a última transação<br/>
+        Arquivos mal formados ou sem registro, não são considerados;
+      * **Auditoria completa:** Ao registrar a operação, momento e usuário envolvido, é permitido traçar a evolução do dado e garantir sua governança e resolução de problemas.
 
   * **Metadados descentralizados:**
     Os metadados das tabelas são armazenados nos logs de transação ao invés de um metastore centralizado.<br/>
