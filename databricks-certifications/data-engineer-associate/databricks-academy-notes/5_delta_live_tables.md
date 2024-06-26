@@ -61,7 +61,7 @@ AS SELECT COUNT(*) FROM LIVE.events
 ```
 
 ### **Expectativas:**
-São testes que garantem data quality em produção. ela valida todos os registros da carga da pipeline oferecendo como políticas para violação de expectations:
+São testes que garantem data quality em produção. Ela valida todos os registros da carga da pipeline oferecendo como políticas para violação de expectations:
 * **_Registrar_** o número de registros ruins;
 * **_Deletar_** registros ruins;
 * **_Abortar_** o processamento dos registros ruins.
@@ -83,11 +83,11 @@ dlt.expect_or_drop(
 ```
 
 ### **Pipeline UI:**
-Permite:
-i. **Visualizar** fluxo;
-ii. **Descobrir** metadados e quality de cada tabela;
-iii. **Acessar** histórico de atualizações;
-iv. **Controlar** operações;
+Permite:<br/>
+i. **Visualizar** fluxo;<br/>
+ii. **Descobrir** metadados e quality de cada tabela;<br/>
+iii. **Acessar** histórico de atualizações;<br/>
+iv. **Controlar** operações;<br/>
 v. **Investigar** os eventos.
 
 ### **Streaming:**
