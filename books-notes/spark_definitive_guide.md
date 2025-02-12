@@ -1,5 +1,7 @@
 Esse é um resumo do livro Spark: The Definitive Guide, de Bill Chambers e Matei Zaharia, que cobre o Apache Spark 2.0.
 
+Os tópicos destacados são os que cobrem  arquitetura e functionamento por debaixo do capô do Spark, apesar do livro seguir válido como referência para as releases atuais do Spark quanto a seus outros temas.
+
 As referências de número de página seguem a versão [desse repositório](https://github.com/VolodymyrGavrysh/My_RoadMap_Data_Science/blob/master/kds/books/Spark-The%20Definitive%20Guide.pdf)
 
 <h1><a id="topicos">Tópicos:</a></h1>
