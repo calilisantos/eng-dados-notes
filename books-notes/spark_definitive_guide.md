@@ -47,6 +47,8 @@ As referências de número de página seguem a versão [desse repositório](http
   Suporta uma variedade de linguagens de programação (Python, Java, Scala e R), incluindo bibliotecas para tarefas diversas cobrindo do SQL ao streaming e machine learning, rodando de um laptop à um cluster de milhares de servidores. 
 
 <h3><a id="big-data">1.1. O problema da big data:</a></h3>
+
+  ##### [Voltar ao topo](#topicos)
   Como muitas das tendência em computação, mudanças em fatores econômicos acarretam mudanças em aplicações e hardwares computacionais. 
 
   Os computadores se tornaram mais rápidos com o aumento na velocidade de seu processamento, permitindo a execução de mais instruções por segundo a cada ano. 
@@ -239,210 +241,247 @@ As referências de número de página seguem a versão [desse repositório](http
   Em seguida o Spark usa o catálogo, um repositório com todas as informações de tabelas e DataFrames para resolver as colunas em tabelas no analyzer. O analizer pode rejeitar o unresolved logical plan se os atributos não forem achados no catálogo. Se forem resolvidos, o resultado passa para o Catalyst Optimizer, uma coleção de regras que tentam otimizar o plano lógico reajustando predicados e seleções. Pacotes podem extender o Catalyst para incluir suas próprias regras para otimizações específicas de domínios.  
 
 <h3><a id="physical-planning">3.1.2. Physical Planning:</a></h3>
-### 3.1.2. Physical Planning: 
-Criando um optimized logical plan, O Spark inicia o processo de criação de um physical plan, ou Spark plan, especificando como o logical plan será executado no cluster, em diferentes estratégias de execução física comparadas em um modelo de custos (cost model) 
 
-Optimized logical plan 
-  |—Physical Plan 1 
-|—Physical Plan 2 
-|—Physical Plan n 
-    |—Cost Model 
-      |—Best Physical Plan 
-        |— Execução no cluster 
+  ##### [Voltar ao topo](#topicos)
+  Criando um optimized logical plan, O Spark inicia o processo de criação de um physical plan, ou Spark plan, especificando como o logical plan será executado no cluster, em diferentes estratégias de execução física comparadas em um modelo de custos (cost model) 
 
-Plano físicos resultam numa séries de RDDs e transformações, o que pode ser considerado um compilador do Spark, que recebe consultas em dataframes, datasets e SQL e as compila em transformações RDD. 
-  
-Ao selecionar um plano físico, Spark executar o código sobre RDDs, a camada mais baixa de interface de programação do Spark. Ainda, em tempo de execução (runtime) é gerado Java bytecode que pode remover tasks e stages completamente durante a execução. 
+  Optimized logical plan 
+    |—Physical Plan 1 
+  |—Physical Plan 2 
+  |—Physical Plan n 
+      |—Cost Model 
+        |—Best Physical Plan 
+          |— Execução no cluster 
 
-Por fim os resultados são retornados aos usuários. 
+  Plano físicos resultam numa séries de RDDs e transformações, o que pode ser considerado um compilador do Spark, que recebe consultas em dataframes, datasets e SQL e as compila em transformações RDD. 
     
-### 3.1.3. Colunas (p. 60):  
-Para o Spark, colunas são construções lógicas que representam um valor computado em um registro por meio de uma expressão. Isso significa que para ter um valor real para uma coluna, é necessário ter uma linha, e para ter uma linha é necessário um DataFrame. Ou seja, não é possível manipular uma coluna fora do contexto de um DataFrame. 
+  Ao selecionar um plano físico, Spark executar o código sobre RDDs, a camada mais baixa de interface de programação do Spark. Ainda, em tempo de execução (runtime) é gerado Java bytecode que pode remover tasks e stages completamente durante a execução. 
 
-* Aprofundando: 
-  * Colunas são expressões; 
-  * Colunas e transformações dessas colunas compilam no mesmo plano lógico que expressões analisadas. expr(“someCol” -5) == col(“someCol”) -5
+  Por fim os resultados são retornados aos usuários. 
 
-### 3.1.4. Registros e linhas (p. 70): 
-No Spark, cada linha do DataFrame é um único registro. Spark representa esse registro com um objeto do tipo Row. 
+<h3><a id="columns">3.1.3. Colunas (p. 60):</a></h3>
 
-O Spark manipula esses objetos usando expressões de colunas buscando produzir valores usáveis. 
+  ##### [Voltar ao topo](#topicos)
+  Para o Spark, colunas são construções lógicas que representam um valor computado em um registro por meio de uma expressão. Isso significa que para ter um valor real para uma coluna, é necessário ter uma linha, e para ter uma linha é necessário um DataFrame. Ou seja, não é possível manipular uma coluna fora do contexto de um DataFrame. 
 
-Internamente eles são arrays de bytes mas que nunca são mostrados aos usuários por serem manipulados com expressões de colunas 
+  * Aprofundando: 
+    * Colunas são expressões; 
+    * Colunas e transformações dessas colunas compilam no mesmo plano lógico que expressões analisadas. expr(“someCol” -5) == col(“someCol”) -5
 
-## 4. Operações Estruturadas básicas (Capítulo 5 do livro): 
+<h3><a id="rows">3.1.4. Registros e linhas (p. 70):</a></h3>
 
-### 4.1. DataFrame transformations: 
-As transformações podem ser sumarizadas em quatro operações:
+  ##### [Voltar ao topo](#topicos)
+  No Spark, cada linha do DataFrame é um único registro. Spark representa esse registro com um objeto do tipo Row. 
 
-* Adicionar linhas ou colunas 
-* Remover linhas ou colunas 
-* Transformar uma linha em coluna (ou vice-versa) - Mudar a ordem das linhas baseado no valores nas colunas 
+  O Spark manipula esses objetos usando expressões de colunas buscando produzir valores usáveis. 
 
-### NOTA:  
-Por padrão Spark é case insensitive, o que pode ser alterar com a conf: spark.sql.caseSensitive true 
- 
-### 4.1.1. Repartition e Coalesce (p. 86): 
-Buscando particionar os dados de acordo com a frequência de colunas filtradas, podendo controlar o desenhou físico dos dados ao redor do cluster, seja com o particionamento do schema e o número de partições é através dos métodos repartition e Coalesce. 
+  Internamente eles são arrays de bytes mas que nunca são mostrados aos usuários por serem manipulados com expressões de colunas 
 
-O primeiro faz um embaralhamento total dos dados, significando que deve ser usado quando o número de partições futuras é maior do que o número atual ou quando se busca particionar por um conjunto de colunas. 
+<h2><a id="basic-structured-operations">4. Operações Estruturadas básicas (Capítulo 5 do livro):</a></h2>
 
-Quando uma certa coluna é frequentemente usada como filtro, é uma candidata a ser particionada: df.repartition(col(“country”) 
+  ##### [Voltar ao topo](#topicos)
 
-Também sendo possível especificar o número de partições em conjunto: 
-```python
-df.repartition(5, col(“country”) 
-```
+<h3><a id="dataframe-transformations">4.1. DataFrame transformations:</a></h3>
 
-**Coalesce** não fará um shuffle completo, e tentará combinar as partições. 
-```python
-df.repartition(5, col(“country”).coalesce(2) 
-```
+  ##### [Voltar ao topo](#topicos)
+  As transformações podem ser sumarizadas em quatro operações:
 
-_Colletando linhas para o Driver: 
-Cuidado porque para grandes conjuntos de dados pode facilmente crasear o nó do driver que irá receber esses dados. 
+  * Adicionar linhas ou colunas 
+  * Remover linhas ou colunas 
+  * Transformar uma linha em coluna (ou vice-versa) - Mudar a ordem das linhas baseado no valores nas colunas 
 
-> NOTA: é possível determinar a timezone do job com a conf abaixo: 
-```python
-spark.conf.sessionLocalTimeZone(<javaTimeZoneFormat>) 
-```
+  >NOTA:  Por padrão Spark é case insensitive, o que pode ser alterar com a conf: spark.sql.caseSensitive true 
 
-## 5. Agregações (Capítulo 7 do livro): 
-Podem ser: 
-* a nível do dataframe inteiro (sum, max, …) 
-* agrupamento (groupBy) 
-* window functions 
-* grouping sets: uma ferramenta de baixo nível para combinar conjuntos de agregação. Disponível somente no SQL 
-* rollup: solução para os dataframes semelhante ao grouping sets, é uma agregação multidimensional que executa uma variedade de cálculos no estilo groupby _cube: semelhante ao rollup, também é uma solução de grouping sets, mas ao invés de tratar os dados hierarquicamente, um cubo faz a mesma coisa entre todas as dimensões. 
-* pivot: possibilita converter uma linha em coluna 
+<h3><a id="repartition-coalesce">4.1.1. Repartition e Coalesce (p. 86):</a></h3>
 
-## 6. Joins (Capítulo 8 do livro): 
-* Crossjoin: pode ser necessário habilitar ele para evitar warnings ou que o spark tente fazer outro join ao invés do cross (p. 153): spark.sql.crossJoin.enable true 
- 
-* Join entre big e small table: 
-No atributo other do join, use a função broadcast no dataframe pequeno.  
-* Importante: um broadcast em uma tabela grande pode quebrar o nó do driver. 
+  ##### [Voltar ao topo](#topicos)
+  Buscando particionar os dados de acordo com a frequência de colunas filtradas, podendo controlar o desenhou físico dos dados ao redor do cluster, seja com o particionamento do schema e o número de partições é através dos métodos repartition e Coalesce. 
 
-## 7. Spark SQL (Capítulo 10 do livro): 
-* Writing data em paralelo: 
-O número de arquivos escritos depende do número de partições do DataFrame na hora da escrita. Um repartition/coalesce pode ser usado para controlar a quantidade de arquivos resultantes. 
- 
-* Bucketing: 
-Semelhante ao partitionBy, o bucket agrupa permite especificar o dado que é escrito em cada arquivo pelas características das colunas informadas no bucketBy 
- 
-* Gerindo o tamanho dos arquivos: 
-A opção de escrita `“masRecordsPerFile”` permite especificar o número de registros por arquivo dando um nível de controle do tamanho desses arquivos evitando problemas de small files por exemplo. 
- 
-> NOTA: Um count(*) no Spark considera os valores nulos, porém contando uma coluna individual Spark não contará os valores nulos. 
- 
-* CONFS PARA TABELAS SPARK:
-```python
-spark.sql.files.maxPartitionBytes 
-spark.sql.shuffle.partitions
-```
+  O primeiro faz um embaralhamento total dos dados, significando que deve ser usado quando o número de partições futuras é maior do que o número atual ou quando se busca particionar por um conjunto de colunas. 
 
-## 8. Low level APIs (Capítulo 12 do livro):
+  Quando uma certa coluna é frequentemente usada como filtro, é uma candidata a ser particionada: df.repartition(col(“country”) 
 
-A SparkContext, que é acessível nas SparkSession, são os entrypoints para as funcionalidades das APIs de baixo nível.
+  Também sendo possível especificar o número de partições em conjunto: 
+  ```python
+  df.repartition(5, col(“country”) 
+  ```
 
-_Casos de uso:´ 
-> Uma funcionalidade inexistente nas API de alto nível, como maior controle do plano físico a ser executado > Manutenção de códigos legados escritos em RDDs > Necessidade de manipulação em alguma variável customizada compartilhada (que serão usadas nas 
-UDFs)
+  **Coalesce** não fará um shuffle completo, e tentará combinar as partições. 
+  ```python
+  df.repartition(5, col(“country”).coalesce(2) 
+  ```
 
-**RDD**: Na prática, o RDD tem muitas das funções das APIs estruturadas, para algumas a diferença é que a manipulação ocorre na linguagem do usuário, parecido com as UDFs. 
+  _Colletando linhas para o Driver: 
+  Cuidado porque para grandes conjuntos de dados pode facilmente crasear o nó do driver que irá receber esses dados. 
 
-## 9. Spark Applications (Capítulos 15 a 17 do livro):
-### 9.1. Execution modes (p. 255):
-* **Cluster mode**: O jeito mais comum de executar Spark Applications, com a pessoa submetendo seu código para o cluster manager, que lança o processo do driver em um worker node dentro do cluster em conjunto ao processamento do executor. Em suma, o cluster manager é responsável por manter todos os processos relacionados com a Spark Application. 
-* **Client mode**: Parecido com o cluster mode, com exceção que o Spark Driver permanece na máquina do cliente que submete a aplicação. Assim, a máquina do cliente é responsável por manter o processo do Spark Driver, e o cluster mantem o processo dos executors.
-Basicamente, a máquina que executa o driver é externa ao cluster, também conhecidas como gateway machines ou edge nodes.
-* **Local mode**: Diferente dos outros modos, ele executa a Spark Application em uma única máquina, atingindo o paralelismo através das threads dessa única máquina.
-Comum para aprender sobre Spark e testar suas aplicações, não é recomendado para aplicações em produção.
+  > NOTA: é possível determinar a timezone do job com a conf abaixo: 
+  ```python
+  spark.conf.sessionLocalTimeZone(<javaTimeZoneFormat>) 
+  ```
 
-### 9.2. Life cycle da Spark Application (fora do Spark)
-Pensando na infraestrutura que mantém o Spark, esse é o ciclo de vida da Spark Application:
+<h2><a id="aggregations">5. Agregações (Capítulo 7 do livro):</a></h2>
 
-1. Client request: A pessoa submete seu código ao driver node do cluster manager que aloca o driver em um nó do cluster.
+  ##### [Voltar ao topo](#topicos)
+  Podem ser: 
+  * a nível do dataframe inteiro (sum, max, …) 
+  * agrupamento (groupBy) 
+  * window functions 
+  * grouping sets: uma ferramenta de baixo nível para combinar conjuntos de agregação. Disponível somente no SQL 
+  * rollup: solução para os dataframes semelhante ao grouping sets, é uma agregação multidimensional que executa uma variedade de cálculos no estilo groupby _cube: semelhante ao rollup, também é uma solução de grouping sets, mas ao invés de tratar os dados hierarquicamente, um cubo faz a mesma coisa entre todas as dimensões. 
+  * pivot: possibilita converter uma linha em coluna 
 
-2. Launch: Com o driver alocado no cluster, é iniciada a execução do código do usuário que inclui uma SparkSession que inicia um Spark Cluster (driver+executors). 
-A SparkSession na sequência se comunica com o cluster manager requerendo que o processo do Spark Executor seja lançado no cluster.
-O número de executors e as configurações relevantes podem ser configuradas pelo usuário na submissão do código.
+<h2><a id="joins">6. Joins (Capítulo 8 do livro):</a></h2>
 
-O cluster manager responde alocando o processos dos executors e enviando a informação relevante das locations para o processo do driver.
-Com tudo engatilhado corretamente, têm-se o Spark Cluster.
+  ##### [Voltar ao topo](#topicos)
+  * Crossjoin: pode ser necessário habilitar ele para evitar warnings ou que o spark tente fazer outro join ao invés do cross (p. 153): spark.sql.crossJoin.enable true 
+  
+  * Join entre big e small table: 
+  No atributo other do join, use a função broadcast no dataframe pequeno.  
+  * Importante: um broadcast em uma tabela grande pode quebrar o nó do driver. 
 
-3. Execução: Com o Spark Cluster, o driver e Workers se comunicam entre si executando o código e movendo os dados ao longo deles.
-O driver agenda tasks em cada worker, e cada worker responde com o status dessas tasks de sucesso ou falha.
+<h2><a id="spark-sql">7. Spark SQL (Capítulo 10 do livro):</a></h2>
 
-4. Com a Spark Application completada, o processo do drive finaliza com sucesso ou falha. O Cluster manager então interrompe os executors no spark cluster para o driver.
-Nesse ponto é possível consultar o cluster manager sobre o status da execução da Spark Application.
+  ##### [Voltar ao topo](#topicos)
+  * Writing data em paralelo: 
+  O número de arquivos escritos depende do número de partições do DataFrame na hora da escrita. Um repartition/coalesce pode ser usado para controlar a quantidade de arquivos resultantes. 
+  
+  * Bucketing: 
+  Semelhante ao partitionBy, o bucket agrupa permite especificar o dado que é escrito em cada arquivo pelas características das colunas informadas no bucketBy 
+  
+  * Gerindo o tamanho dos arquivos: 
+  A opção de escrita `“masRecordsPerFile”` permite especificar o número de registros por arquivo dando um nível de controle do tamanho desses arquivos evitando problemas de small files por exemplo. 
+  
+  > NOTA: Um count(*) no Spark considera os valores nulos, porém contando uma coluna individual Spark não contará os valores nulos. 
+  
+  * CONFS PARA TABELAS SPARK:
+  ```python
+  spark.sql.files.maxPartitionBytes 
+  spark.sql.shuffle.partitions
+  ```
 
-### 9.3. Life cycle da Spark Application (no Spark)
-Dentro do Spark, esse é o ciclo de vida da Spark Application, basicamente o código do usuário.
+<h2><a id="low-level-apis">8. Low level APIs (Capítulo 12 do livro):</a></h2>
 
-Cada aplicação é construída por um ou mais Spark Jobs, que são executados de forma serial a menos que seja usada threading para ativar múltiplas ações em paralelo.
+  ##### [Voltar ao topo](#topicos)
 
-1. SparkSession: A primeira ação de qualquer Spark Application é criar uma SparkSession. Em muitos dos modos interativos, isso é feito por você, mas é uma aplicação, isso deve ser feito manualmente.
+  A SparkContext, que é acessível nas SparkSession, são os entrypoints para as funcionalidades das APIs de baixo nível.
 
-Depois de ter uma SparkSession, deve ser habilitada a execução do código Spark.
+  _Casos de uso:´ 
+  > Uma funcionalidade inexistente nas API de alto nível, como maior controle do plano físico a ser executado > Manutenção de códigos legados escritos em RDDs > Necessidade de manipulação em alguma variável customizada compartilhada (que serão usadas nas 
+  UDFs)
 
-Da SparkSession é possível acessar todos os contextos e configurações legados e de baixo nível.
+  **RDD**: Na prática, o RDD tem muitas das funções das APIs estruturadas, para algumas a diferença é que a manipulação ocorre na linguagem do usuário, parecido com as UDFs. 
 
-2. SparkContext: objeto dentro da SparkSession que representa a conexão com o Spark cluster.
+<h2><a id="spark-applications">9. Spark Applications (Capítulos 15 a 17 do livro):</a></h2>
 
-É através dela que é habilitada a comunicação com algumas API de baixo nível do Spark como RDDs.
+  ##### [Voltar ao topo](#topicos)
 
-Através da SparkContext é possível criar RDDs, acumulators, broadcast variables e rodar códigos no cluster.
+<h3><a id="execution-modes">9.1. Execution modes (p. 255):</a></h3>
 
-3. Instruções lógicas para execução física: A conversão do código em quaisquer das linguagens suportadas é enviada para  um plano de execução através de uma action, que se desdobra nas seguintes estruturas:
+  ##### [Voltar ao topo](#topicos)
+  * **Cluster mode**: O jeito mais comum de executar Spark Applications, com a pessoa submetendo seu código para o cluster manager, que lança o processo do driver em um worker node dentro do cluster em conjunto ao processamento do executor. Em suma, o cluster manager é responsável por manter todos os processos relacionados com a Spark Application. 
+  * **Client mode**: Parecido com o cluster mode, com exceção que o Spark Driver permanece na máquina do cliente que submete a aplicação. Assim, a máquina do cliente é responsável por manter o processo do Spark Driver, e o cluster mantem o processo dos executors.
+  Basicamente, a máquina que executa o driver é externa ao cluster, também conhecidas como gateway machines ou edge nodes.
+  * **Local mode**: Diferente dos outros modos, ele executa a Spark Application em uma única máquina, atingindo o paralelismo através das threads dessa única máquina.
+  Comum para aprender sobre Spark e testar suas aplicações, não é recomendado para aplicações em produção.
 
-* Spark job: Em geral deve haver um Spark job para cada action. Actions retornarão um resultado. Cada job é repartido em uma série de stages, com o número deles dependendo em quantas operações de shuffle precisam ocorrer.
-* Stages: São grupos de tasks que podem ser executadas juntas para computar a mesma operação em múltiplas máquinas. Em geral o Spark tentará empacotar mais trabalhos juntos quanto possível (isso é, quantas transformações quanto possível em um job) no mesmo stage, mas o motor inicia novos stages depois das operações de shuffle.
+<h3><a id="life-cycle-outside-spark">9.2. Life cycle da Spark Application (fora do Spark):</a></h3>
 
-Um shuffle representa uma repartição física do dado, como um agrupamento ou ordenamento do dado processado. O time de reparticionamento exige coordenação entre os executors para mover os dados entre eles.
+  ##### [Voltar ao topo](#topicos)
+  Pensando na infraestrutura que mantém o Spark, esse é o ciclo de vida da Spark Application:
 
-O Spark inicia um novo stage depois de cada shuffle, e acompanha a ordem de execução que os stages devem seguir para computar o resultado final.
+  1. Client request: A pessoa submete seu código ao driver node do cluster manager que aloca o driver em um nó do cluster.
 
-Uma regra de bolso é que o número de partições deve ser maior que o número de executors do cluster, potencializado por muitos fatores dependendo da carga de trabalho. 
+  2. Launch: Com o driver alocado no cluster, é iniciada a execução do código do usuário que inclui uma SparkSession que inicia um Spark Cluster (driver+executors). 
+  A SparkSession na sequência se comunica com o cluster manager requerendo que o processo do Spark Executor seja lançado no cluster.
+  O número de executors e as configurações relevantes podem ser configuradas pelo usuário na submissão do código.
 
-Contudo, executando na máquina local, é importante manter o valor baixo pois a máquina local pode não compartimentar a quantidade de Jobs em paralelo.
+  O cluster manager responde alocando o processos dos executors e enviando a informação relevante das locations para o processo do driver.
+  Com tudo engatilhado corretamente, têm-se o Spark Cluster.
 
-* Tasks: Stages no spark consistem em tasks, que correspondem a uma combinação de blocos de dados e um conjunto de transformações que serão executadas em um único executor.
+  3. Execução: Com o Spark Cluster, o driver e Workers se comunicam entre si executando o código e movendo os dados ao longo deles.
+  O driver agenda tasks em cada worker, e cada worker responde com o status dessas tasks de sucesso ou falha.
 
-Se houver uma partição do dado, será executada uma task. Se houver 1000 partições, resultarão em mil tasks em paralelo.
+  4. Com a Spark Application completada, o processo do drive finaliza com sucesso ou falha. O Cluster manager então interrompe os executors no spark cluster para o driver.
+  Nesse ponto é possível consultar o cluster manager sobre o status da execução da Spark Application.
 
-Ela é uma unidade computacional aplicada a uma unidade de dado (a partição).
+<h3><a id="life-cycle-inside-spark">9.3. Life cycle da Spark Application (no Spark):</a></h3>
 
-Particionar seus dados em um grande número de partições significa que mais serão executadas em paralelo. 
+  ##### [Voltar ao topo](#topicos)
+  Dentro do Spark, esse é o ciclo de vida da Spark Application, basicamente o código do usuário.
 
-Não é um almoço grátis, mas é um jeito simples para iniciar com a otimização.
+  Cada aplicação é construída por um ou mais Spark Jobs, que são executados de forma serial a menos que seja usada threading para ativar múltiplas ações em paralelo.
 
-### 9.4. Detalhes da execução:
-O Spark automatiza pipelines de stages e tasks que podem ser executadas juntas, como uma operação de map seguida por outra. Também para todo shuffle, o Spark escreve os dados em um storage estável ( o disco) podendo reutilizar esse dado em múltiplos Jobs.
-* Pipelining: Uma parte importante do que faz o Spark ser uma ferramenta computacional “in memory” é que ele busca realizar quantos passos seja possível de vez antes de escrever os dados da memória para o disco.
+  1. SparkSession: A primeira ação de qualquer Spark Application é criar uma SparkSession. Em muitos dos modos interativos, isso é feito por você, mas é uma aplicação, isso deve ser feito manualmente.
 
-Uma das chaves dessa otimização são as pipelines que ocorrem no nível do RDD.
+  Depois de ter uma SparkSession, deve ser habilitada a execução do código Spark.
 
-Com o pipelinig, uma sequencia de operações que alimentam os dados diretamente em cada uma, sem precisar movê-los entre os nós, é agrupada em um único stage de tasks que faz todas a operações em conjunto.
+  Da SparkSession é possível acessar todos os contextos e configurações legados e de baixo nível.
 
-* Shuffle Persistence: Em uma operação que precisa mover os dados ao longo dos nós, o motor não consegue executar o pipelining e no seu lugar executa um shuffle.
+  2. SparkContext: objeto dentro da SparkSession que representa a conexão com o Spark cluster.
 
-Salvar os dados em disco do shuffle permite o Spark gerenciar falhas ou intermitências quando não há executors disponíveis para processá-los, permitindo um arranjo de reduzir a reexecução de tasks com falhas, preservando os dados que seriam processados nelas.
+  É através dela que é habilitada a comunicação com algumas API de baixo nível do Spark como RDDs.
 
-### 9.5. Spark envs (p. 282)
+  Através da SparkContext é possível criar RDDs, acumulators, broadcast variables e rodar códigos no cluster.
 
-* **Job Scheduling**: tipicamente o scheduler segue um FIFO., que pode ser personalizado pela conf spark.scheduler.mode (mais na página 283)
+  3. Instruções lógicas para execução física: A conversão do código em quaisquer das linguagens suportadas é enviada para  um plano de execução através de uma action, que se desdobra nas seguintes estruturas:
 
-### 9.6. Spark deploys (p. 285 a 295)
+  * Spark job: Em geral deve haver um Spark job para cada action. Actions retornarão um resultado. Cada job é repartido em uma série de stages, com o número deles dependendo em quantas operações de shuffle precisam ocorrer.
+  * Stages: São grupos de tasks que podem ser executadas juntas para computar a mesma operação em múltiplas máquinas. Em geral o Spark tentará empacotar mais trabalhos juntos quanto possível (isso é, quantas transformações quanto possível em um job) no mesmo stage, mas o motor inicia novos stages depois das operações de shuffle.
 
-### 10. Monitoring (Capítulo 18 do livro, p. 296 a 316)
+  Um shuffle representa uma repartição física do dado, como um agrupamento ou ordenamento do dado processado. O time de reparticionamento exige coordenação entre os executors para mover os dados entre eles.
 
-* out of memory error:
-Soluções comuns: 
-* aumento da memória disponível e número de executors
-* Aumento do tamanho dos Workers via configurações pythob
-* Investigar mensagens de erro do garbage collector
-* Tratamento correto de dados nulos, para casos de “ “ e “EMPTY”
-* Evitar UDFs
+  O Spark inicia um novo stage depois de cada shuffle, e acompanha a ordem de execução que os stages devem seguir para computar o resultado final.
 
-## 11. Performance tuning (Capítulo 19 do livro, p. 317 a 330)
+  Uma regra de bolso é que o número de partições deve ser maior que o número de executors do cluster, potencializado por muitos fatores dependendo da carga de trabalho. 
+
+  Contudo, executando na máquina local, é importante manter o valor baixo pois a máquina local pode não compartimentar a quantidade de Jobs em paralelo.
+
+  * Tasks: Stages no spark consistem em tasks, que correspondem a uma combinação de blocos de dados e um conjunto de transformações que serão executadas em um único executor.
+
+  Se houver uma partição do dado, será executada uma task. Se houver 1000 partições, resultarão em mil tasks em paralelo.
+
+  Ela é uma unidade computacional aplicada a uma unidade de dado (a partição).
+
+  Particionar seus dados em um grande número de partições significa que mais serão executadas em paralelo. 
+
+  Não é um almoço grátis, mas é um jeito simples para iniciar com a otimização.
+
+<h3><a id="execution-details">9.4. Detalhes da execução:</a></h3>
+
+  ##### [Voltar ao topo](#topicos)
+  O Spark automatiza pipelines de stages e tasks que podem ser executadas juntas, como uma operação de map seguida por outra. Também para todo shuffle, o Spark escreve os dados em um storage estável ( o disco) podendo reutilizar esse dado em múltiplos Jobs.
+  * Pipelining: Uma parte importante do que faz o Spark ser uma ferramenta computacional “in memory” é que ele busca realizar quantos passos seja possível de vez antes de escrever os dados da memória para o disco.
+
+  Uma das chaves dessa otimização são as pipelines que ocorrem no nível do RDD.
+
+  Com o pipelinig, uma sequencia de operações que alimentam os dados diretamente em cada uma, sem precisar movê-los entre os nós, é agrupada em um único stage de tasks que faz todas a operações em conjunto.
+
+  * Shuffle Persistence: Em uma operação que precisa mover os dados ao longo dos nós, o motor não consegue executar o pipelining e no seu lugar executa um shuffle.
+
+  Salvar os dados em disco do shuffle permite o Spark gerenciar falhas ou intermitências quando não há executors disponíveis para processá-los, permitindo um arranjo de reduzir a reexecução de tasks com falhas, preservando os dados que seriam processados nelas.
+
+<h3><a id="spark-envs">9.5. Spark envs (p. 282):</a></h3>
+
+  ##### [Voltar ao topo](#topicos)
+
+  * **Job Scheduling**: tipicamente o scheduler segue um FIFO., que pode ser personalizado pela conf spark.scheduler.mode (mais na página 283)
+
+<h3><a id="spark-deploys">9.6. Spark deploys (p. 285 a 295):</a></h3>
+
+  ##### [Voltar ao topo](#topicos)
+
+<h2><a id="monitoring">10. Monitoring (Capítulo 18 do livro, p. 296 a 316):</a></h2>
+
+  ##### [Voltar ao topo](#topicos)
+
+  * out of memory error:
+  Soluções comuns: 
+  * aumento da memória disponível e número de executors
+  * Aumento do tamanho dos Workers via configurações pythob
+  * Investigar mensagens de erro do garbage collector
+  * Tratamento correto de dados nulos, para casos de “ “ e “EMPTY”
+  * Evitar UDFs
+
+<h2><a id="performance-tuning">11. Performance tuning (Capítulo 19 do livro, p. 317 a 330):</a></h2>
+
+  ##### [Voltar ao topo](#topicos)
