@@ -1,8 +1,8 @@
 Esse é um resumo do livro Spark: The Definitive Guide, de Bill Chambers e Matei Zaharia, que cobre o Apache Spark 2.0.
 
-Os tópicos destacados são os que cobrem  arquitetura e functionamento por debaixo do capô do Spark, apesar do livro seguir válido como referência para as releases atuais do Spark quanto a seus outros temas.
+Os tópicos destacados são os que cobrem arquitetura e funcionamento por debaixo do capô do Spark, apesar do livro seguir válido como referência para as releases atuais do Spark quanto a seus outros temas.
 
-As referências de número de página seguem a versão [desse repositório](https://github.com/VolodymyrGavrysh/My_RoadMap_Data_Science/blob/master/kds/books/Spark-The%20Definitive%20Guide.pdf)
+As referências de número de página seguem a versão [desse repositório](https://github.com/VolodymyrGavrysh/My_RoadMap_Data_Science/blob/master/kds/books/Spark-The%20Definitive%20Guide.pdf).
 
 <h1><a id="topicos">Tópicos:</a></h1>
 
@@ -46,7 +46,7 @@ As referências de número de página seguem a versão [desse repositório](http
   ##### [Voltar ao topo](#topicos)
   Um motor de computação unificado e um conjunto de bibliotecas para processamento paralelo de dados em clusters de computadores.
 
-  Suporta uma variedade de linguagens de programação (Python, Java, Scala e R), incluindo bibliotecas para tarefas diversas cobrindo do SQL ao streaming e machine learning, rodando de um laptop à um cluster de milhares de servidores. 
+  Suporta uma variedade de linguagens de programação (Python, Java, Scala e R), incluindo bibliotecas para tarefas diversas cobrindo do SQL ao streaming e machine learning, rodando de um laptop a um cluster de milhares de servidores. 
 
 <h3><a id="big-data">1.1. O problema da big data:</a></h3>
 
@@ -54,7 +54,7 @@ As referências de número de página seguem a versão [desse repositório](http
   Como muitas das tendência em computação, mudanças em fatores econômicos acarretam mudanças em aplicações e hardwares computacionais. 
 
   Os computadores se tornaram mais rápidos com o aumento na velocidade de seu processamento, permitindo a execução de mais instruções por segundo a cada ano. 
-  Como resultado, sem mudanças no código aplicações se tornavam mais rápidas. Essa tendência levou a um grande e estabelecido ecossistema construindo ao longo dos anos de aplicações desenhados para serem eecutadas em um único processador. Essas aplicações encabeçaram a tendência de melhorar a velocidade de processamento para escalar maior computação e volumes de dados ao longo do tempo. 
+  Como resultado, sem mudanças no código aplicações se tornavam mais rápidas. Essa tendência levou a um grande e estabelecido ecossistema construido ao longo dos anos de aplicações desenhadas para serem executadas em um único processador. Essas aplicações encabeçaram a tendência de melhorar a velocidade de processamento para escalar maior computação e volumes de dados ao longo do tempo. 
 
   Essa tendência dos hardwares parou em torno de 2005 com limites difíceis na dissipação de calor fazendo os desenvolvedores de hardware pararem a construção de processadores individuais mais rápidos, trocando para a adição de mais cores de CPU paralelos rodando na mesma velocidade.  
   A consequência foi a imediata necessidade das aplicações serem modificadas para adicionar paralelismo para serem executadas mais rápidas, trazendo ao estágio de modelos de programação como o Apache Spark. 
@@ -69,11 +69,10 @@ As referências de número de página seguem a versão [desse repositório](http
 <h3><a id="history">1.2. História do Spark:</a></h3>
 
   ##### [Voltar ao topo](#topicos)
-  O Spark surge em pesquisas na UC Berkeley em 2009 como projeto de pesquisa, buscando evoluir o Hadoop MapReduce, o principal motor de programação paralela para clusters da época. Sua primeira publicação foi o paper “Spark: Cluster Computing with Working Sets” by 
-  Matei Zaharia, Mosharaf Chowdhury, Michael Franklin, Scott Shenker, and Ion Stoica of the UC Berkeley AMPlab. 
+  O Spark surge em pesquisas na UC Berkeley em 2009 como projeto de pesquisa, buscando evoluir o Hadoop MapReduce, o principal motor de programação paralela para clusters da época. Sua primeira publicação foi o paper “Spark: Cluster Computing with Working Sets” de Matei Zaharia, Mosharaf Chowdhury, Michael Franklin, Scott Shenker, e Ion Stoica do UC Berkeley AMPlab. 
 
   Dois principais achados iniciais foram: i. o grande potencial da computação por clusters, com as empresas que usavam o MapReduce enxergando várias aplicações possíveis usando os novos dados e vários grupos utilizando o sistema já com seus casos de uso iniciais; ii. o desafio e ineficiência do MapReduce em construir grandes aplicações. 
-  Um exemplo é um job de machine learning que 10 a 20 vezes por um dataset, onde no MapReduce cada execução precisaria ser escrita como um job que será executado separadamente no cluster carregando os dados do zero.
+  Um exemplo é um job de machine learning que passa de 10 a 20 vezes por um dataset inteiro, onde no MapReduce cada execução precisaria ser escrita como um job que será executado separadamente no cluster carregando os dados do zero.
 
   Para esse problema, o time do Spark desenhou uma API baseada em programação funcional, que pode brevemente declarar aplicação com várias etapas, executando em memória (mais eficiente) e compartilhando os dados entre as várias etapas de cálculo. 
 
@@ -85,30 +84,33 @@ As referências de número de página seguem a versão [desse repositório](http
 
   Um cluster, como comentado, agrupa o poder de várias máquinas juntas como se fossem um único computador. Uma estrutura que coordene o trabalho ao longo do cluster é o que o Spark faz, gerenciando e coordenando a execução de tarefas dos dados ao longo do cluster de computadores. 
 
-  O cluster de máquinas usado pelo Spark é gerenciado por um cluster manager, como Spark’s standalone cluster manager, YARN, Mesos e o local mode. A aplicação Spark é submetida ao cluster manager que garantirá os recursos para a aplicação para completar o trabalho. 
+  O cluster de máquinas usado pelo Spark é gerenciado por um cluster manager, como Spark’s standalone cluster manager, YARN, Mesos e o local mode. A aplicação Spark é submetida ao cluster manager que garantirá os recursos para a aplicação completar o fluxo. 
 
-  Essa é a arquitetura física do Spark. 
+  Essa é a arquitetura física do Spark:
 
   * Aplicação Spark (Spark Applications): 
   A Spark Application consiste em um processo do driver e um conjunto de processos dos executors.
 
   * **O processo do driver** executa a função main(), que fica em um nó do cluster, e é responsável por três coisas: 
-  1. Manter informações sobre a Spark Application; 
-  2. Responder ao programa do usuário ou entrada 
-  (input); 
-  3. Analisar, distribuir e agendar o trabalho (work) ao longo dos executors.
+    1. Manter informações sobre a Spark Application; 
+    2. Responder ao programa do usuário ou entrada 
+    (input); 
+    3. Analisar, distribuir e agendar o trabalho (work) ao longo dos executors.
 
-  O processo do driver é o coração da Spark Application e mantém todas as informações relevantes durante o tempo de vida da aplicação. 
+    O processo do driver é o coração da Spark Application e mantém todas as informações relevantes durante o tempo de vida da aplicação. 
 
   * **Os executors**: são responsáveis por de fato realizar o work que o driver atribui a eles. 
   Isso significa que cada executor é responsável por somente duas coisas: 
-  1. Executar o código atribuído a ele pelo driver; 
-  2. Reportar o estado do seu processamento de volta ao nó do driver. 
+    1. Executar o código atribuído a ele pelo driver; 
+    2. Reportar o estado do seu processamento de volta ao nó do driver. 
 
   * Cluster manager:
     |— Driver Process 
+  
       |— Código do usuario 
+  
       |— Spark Session 
+  
     |———|— Executors 
 
     * O Cluster manager troca informação com driver e os executors
@@ -123,9 +125,12 @@ As referências de número de página seguem a versão [desse repositório](http
 <h3><a id="spark-languages">2.2. Spark languages API:</a></h3>
 
   ##### [Voltar ao topo](#topicos)
-  Os executors na maior parte do tempo sempre executará código Spark, o driver porém, pode ser disparado por um número diferentes de linguagens através das APIs de linguagem do Spark. O Spark tem alguns “conceitos” chave em cada linguagem (um objeto SparkSession para cada linguagem), esses conceitos são traduzidos em Spark code que executa no cluster de máquinas. 
+  Os executors na maior parte do tempo sempre executará código Spark, o driver porém, pode ser disparado por um número diferentes de linguagens através das APIs de linguagem do Spark. O Spark tem alguns “conceitos” chave em cada linguagem (um objeto SparkSession para cada linguagem), esses conceitos são traduzidos em Spark code que executa no cluster de máquinas.
+
   Utilizando as Structured APIs, é esperado que todas as linguagens tenham características parecidas de performance. 
-  As linguagens com suporte oficial do Spark: _Scala (linguagem em que o Spark é criado, se tornando a linguagem padrão) 
+
+  As linguagens com suporte oficial do Spark:
+  * Scala (linguagem em que o Spark é criado, se tornando a linguagem padrão) 
   * Java 
   * Python 
   * SQL (um subconjunto do padrão ANSI SQL 2003) 
@@ -232,10 +237,15 @@ As referências de número de página seguem a versão [desse repositório](http
   A primeira fase da execução é converter o código do usuário em um plano lógico. 
 
   Código do usuário 
+  
   |—Unresolved logical plan 
+  
       |—Catalog—Analysis 
+  
               |—Resolved logical plan 
+  
                 |—Logical Optimization 
+  
                   |— Optimized logical plan 
 
   Esse plano representa um conjunto de transformações abstratas convertendo o código do usuário na versão mais otimizada possível. Ë a primeira etapa chamada de unresolved logical plan, porque apesar do código ser válido, as tabelas e colunas especificadas nele podem não existir. 
@@ -247,12 +257,18 @@ As referências de número de página seguem a versão [desse repositório](http
   ##### [Voltar ao topo](#topicos)
   Criando um optimized logical plan, O Spark inicia o processo de criação de um physical plan, ou Spark plan, especificando como o logical plan será executado no cluster, em diferentes estratégias de execução física comparadas em um modelo de custos (cost model) 
 
-  Optimized logical plan 
+  Optimized logical plan
+
     |—Physical Plan 1 
+  
   |—Physical Plan 2 
+  
   |—Physical Plan n 
+  
       |—Cost Model 
+  
         |—Best Physical Plan 
+  
           |— Execução no cluster 
 
   Plano físicos resultam numa séries de RDDs e transformações, o que pode ser considerado um compilador do Spark, que recebe consultas em dataframes, datasets e SQL e as compila em transformações RDD. 
